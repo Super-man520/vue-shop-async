@@ -15,7 +15,7 @@
         </div>
       </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside width="200px" ref="myAside">
           <el-row class="tac">
             <el-menu
               router
@@ -42,6 +42,8 @@
           <router-view></router-view>
         </el-main>
       </el-container>
+        <i class="el-icon-arrow-right el-icon-arrow" v-if="flag" @click="showAside"></i>
+        <i class="el-icon-arrow-left el-icon-arrow" v-if="!flag" @click="hideAside"></i>
     </el-container>
   </div>
 </template>
@@ -50,7 +52,8 @@
 export default {
   data () {
     return {
-      menuList: []
+      menuList: [],
+      flag: false
     }
   },
   computed: {
@@ -73,6 +76,7 @@ export default {
   },
   methods: {
     logout () {
+      // console.log(this.$refs.myAside)
       this.$confirm('你确定要推出么?', '友情提示', {
         type: 'warning'
       }).then(() => {
@@ -81,6 +85,14 @@ export default {
       }).catch(e => {
         console.log(e)
       })
+    },
+    hideAside () {
+      this.flag = !this.flag
+      this.$refs.myAside.$el.style.marginLeft = '-200px'
+    },
+    showAside () {
+      this.flag = !this.flag
+      this.$refs.myAside.$el.style.marginLeft = '0px'
     }
   }
 }
@@ -125,6 +137,7 @@ export default {
     }
     .el-aside {
       background-color: #D3DCE6;
+      transition: all 1s;
       .el-menu {
         border-right: none;
         // .el-menu-item {
@@ -134,6 +147,14 @@ export default {
     }
     .el-main {
       background-color: #E9EEF3;
+    }
+    .el-icon-arrow {
+      position: fixed;
+      left: 10%;
+      bottom: 3%;
+      font-size: 30px;
+      color: #e92322;
+      position: absolute;
     }
   }
 </style>

@@ -1,12 +1,13 @@
 <template>
   <div class="login">
+    <a href="javascript:void(0);" class="logo"><img src="../assets/0010.png" alt=""></a>
     <el-form :model="form" :rules="rules" ref="form" label-width="80px" status-icon
     @keydown.native.enter="login">
       <el-form-item label="username" prop="username">
-        <el-input v-model="form.username" placeholder="username"></el-input>
+        <el-input v-model="form.username" placeholder="please enter username"></el-input>
       </el-form-item>
       <el-form-item label="password" prop="password">
-        <el-input v-model="form.password" type="password" placeholder="password" show-password></el-input>
+        <el-input v-model="form.password" type="password" placeholder="please enter password" show-password></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="login" class="loginBtn">登录</el-button>
@@ -65,6 +66,19 @@ export default {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    .logo {
+      display: block;
+      position: absolute;
+      // width: 120px;
+      // height: 120px;
+      // background-color: #fff;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 100px;
+      img {
+        width: 120px;
+      }
+    }
     .el-form {
       width: 35%;
       margin: 200px auto 0;
@@ -72,7 +86,7 @@ export default {
       padding: 90px 30px 20px;
       border-radius: 15px;
       .loginBtn {
-        margin-right: 100px;
+        margin-right: 30px;
       }
     }
   }
