@@ -231,11 +231,9 @@ export default {
       try {
         await this.$refs.form1.validate()
         const res = await this.$axios.post('categories', this.form1)
-        console.log(res)
+        // console.log(res)
         const { meta } = res
         if (meta.status === 201) {
-          // this.totalPage++
-          // this.pagenum = Math.ceil(this.totalPage / this.pagesize)
           this.getCategoriesList()
           this.addCategory = false
         } else {
