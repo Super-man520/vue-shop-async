@@ -1,3 +1,4 @@
+// 我们不希望从node_modules引入，而是通过script:src引入
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -5,7 +6,7 @@ import router from './router'
 import axios from 'axios'
 // 引入element-ui
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
 // 引入moment
 import moment from 'moment'
 // 引入富文本
