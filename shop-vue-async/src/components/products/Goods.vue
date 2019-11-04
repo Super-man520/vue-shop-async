@@ -153,7 +153,7 @@ export default {
         if (this.pagenum > 1 && this.getGoodsList.length === 1) {
           this.pagenum--
         }
-        this.$message.success('success deleted')
+        this.$message.warning('success deleted')
       }).catch((e) => {
         console.log(e)
       })

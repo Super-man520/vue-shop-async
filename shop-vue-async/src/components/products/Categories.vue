@@ -76,7 +76,7 @@
       <template v-slot:footer>
         <div class="dialog-footer">
           <el-button plain type="primary" @click="cancelAdd">取 消</el-button>
-          <el-button plain type="success" @click="sureAddCategory">确 定</el-button>
+          <el-button plain type="success" @click="sureAddCategory" :loading="loading1">{{loading1?'提交中':'确 定'}}</el-button>
         </div>
       </template>
     </el-dialog>
@@ -87,6 +87,7 @@
 export default {
   data () {
     return {
+      loading1: false,
       options: [],
       props: {
         value: 'cat_id',
@@ -180,7 +181,7 @@ export default {
     },
     // 删除分类
     deleteCategory (row) {
-      console.log(row)
+      // console.log(row)
       this.id = row.cat_id
       this.$confirm('你确定要删除么?此操作不可恢复', '友情提示', {
         type: 'warning'
@@ -226,9 +227,19 @@ export default {
       this.form1.cat_pid = value[value.length - 1] || 0
       this.form1.cat_level = value.length
     },
+    // 封装  await等待一个promise对象  需要先进行封装  .then执行回调函数
+    setTime (time) {
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          resolve()
+        }, time)
+      })
+    },
     async sureAddCategory () {
-      // 校验
       try {
+        this.loading1 = true
+        await this.setTime(1000).then(() => { this.$message.success('添加成功') })
+        // 校验
         await this.$refs.form1.validate()
         const res = await this.$axios.post('categories', this.form1)
         // console.log(res)
@@ -236,6 +247,7 @@ export default {
         if (meta.status === 201) {
           this.getCategoriesList()
           this.addCategory = false
+          this.loading1 = false
         } else {
           this.$message.error(meta.msg)
         }

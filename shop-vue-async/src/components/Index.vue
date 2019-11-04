@@ -9,7 +9,7 @@
           <h1>电商后台管理系统</h1>
         </div>
         <div class="info">
-          <i class="el-icon-user-solid"></i>
+          <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
           <span>欢迎光临 ~ </span>
           <a href="javascript:void(0);" @click="logout">退出</a>
         </div>
@@ -154,6 +154,14 @@ export default {
       bottom: 3%;
       font-size: 30px;
       color: #e92322;
+      z-index: 999;
+    }
+    .el-avatar {
+      // margin-top: 20px;
+      vertical-align: middle;
+      position: relative;
+      top: -5px;
+      margin-right: 12px;
     }
   }
 </style>
