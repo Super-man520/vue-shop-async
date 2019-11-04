@@ -176,6 +176,7 @@ export default {
         await this.$refs.form.validate()
         const res = await this.$axios.post('goods', this.form)
         console.log(res)
+        this.$router.push({ name: 'goods' })
       } catch (e) {
         console.log(e)
         this.$message.error('请输入正确内容')

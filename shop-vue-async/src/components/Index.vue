@@ -42,9 +42,9 @@
           <router-view></router-view>
         </el-main>
       </el-container>
-        <i class="el-icon-arrow-right el-icon-arrow" v-if="flag" @click="showAside"></i>
-        <i class="el-icon-arrow-left el-icon-arrow" v-if="!flag" @click="hideAside"></i>
     </el-container>
+    <i class="el-icon-arrow-right el-icon-arrow" v-if="flag" @click="showAside"></i>
+    <i class="el-icon-arrow-left el-icon-arrow" v-if="!flag" @click="hideAside"></i>
   </div>
 </template>
 
@@ -154,7 +154,6 @@ export default {
       bottom: 3%;
       font-size: 30px;
       color: #e92322;
-      position: absolute;
     }
   }
 </style>
