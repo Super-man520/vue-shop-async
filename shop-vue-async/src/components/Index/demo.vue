@@ -79,18 +79,13 @@
       </template>
     </el-dialog>
     <!-- 意见反馈 -->
-    <el-dialog title="意见反馈" :visible.sync="showFeedback" width="30%" @close="resetForm">
+    <el-dialog title="意见反馈" :visible.sync="showFeedback" width="30%">
       <el-rate  show-text allow-half
         v-model="value"  @change="changeScore"
         :colors="['#F56C6C', '#E6A23C', '#67C23A']">
       </el-rate>
-      <el-form ref="form" :model="form">
-        <el-form-item label="请输入内容：" prop="desc">
-          <el-input type="textarea" :autosize="autosize" placeholder="please enter feedback"
-            v-model="form.desc" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-button @click="resetForm" type="success">重置</el-button>
-      </el-form>
+      <el-input type="textarea" :autosize="autosize" placeholder="please enter feedback"
+      v-model="textarea"></el-input>
     </el-dialog>
   </div>
 </template>
@@ -98,22 +93,6 @@
 <script>
 export default {
   data () {
-    var validate1 = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
-      } else {
-        callback()
-      }
-    }
-    var validate2 = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
-      } else if (value !== this.form.newPassword1) {
-        callback(new Error('两次密码不一致'))
-      } else {
-        callback()
-      }
-    }
     return {
       RegExp: /^(\w){6,20}$/,
       RegExp2: /^[0-9]{1,}$/,
@@ -126,23 +105,20 @@ export default {
         newPassword1: '',
         newPassword2: ''
       },
-      form1: {
-        desc: ''
-      },
       rules: {
         oldPassword: [
           { required: true, message: 'please enter oldPassword', trigger: ['blur', 'change'] },
           { min: 6, max: 15, message: '字符在6 ~ 15之间', trigger: ['blur', 'change'] }
         ],
         newPassword1: [
+          { required: true, message: 'please enter newPassword', trigger: ['blur', 'change'] },
           { min: 6, max: 15, message: '字符在6 ~ 15之间', trigger: ['blur', 'change'] },
-          { pattern: /^(\w){6,20}$/, message: '只能输入6-20个字母、数字、下划线', trigger: ['blur', 'change'] },
-          { validator: validate1, trigger: ['blur', 'change'] }
+          { pattern: /^(\w){6,20}$/, message: '只能输入6-20个字母、数字、下划线', trigger: ['blur', 'change'] }
         ],
         newPassword2: [
+          { required: true, message: 'please enter newPassword', trigger: ['blur', 'change'] },
           { min: 6, max: 15, message: '字符在6 ~ 15之间', trigger: ['blur', 'change'] },
-          { pattern: /^(\w){6,20}$/, message: '只能输入6-20个字母、数字、下划线', trigger: ['blur', 'change'] },
-          { validator: validate2, trigger: ['blur', 'change'] }
+          { pattern: /^(\w){6,20}$/, message: '只能输入6-20个字母、数字、下划线', trigger: ['blur', 'change'] }
         ]
       },
       value: null,
@@ -202,10 +178,17 @@ export default {
     async sureEditPassword () {
       try {
         await this.$refs.form.validate()
-        if (this.RegExp2.test(this.form.newPassword1) || this.RegExp2.test(this.form.newPassword2)) {
+        // let info1 = this.rules.newPassword1[2].message
+        // let info2 = this.rules.newPassword2[2].message
+        if (this.form.oldPassword === this.form.newPassword1 || this.form.oldPassword === this.form.newPassword2) {
+          this.$message.error('新旧密码请保持不一致')
+        } else if (this.form.newPassword1 !== this.form.newPassword2) {
+          // console.log(this.rules.newPassword2[2].message)
+          // info1 = '两次输入密码不一致'
+          this.$message.warning('两次输入密码不一致')
+        } else if (this.RegExp2.test(this.form.newPassword1) || this.RegExp2.test(this.form.newPassword2)) {
           this.$message.error('请勿输入纯数字')
         } else {
-          this.showEditPassword = false
           this.$message.success('修改密码成功')
         }
       } catch (e) {
